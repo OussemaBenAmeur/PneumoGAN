@@ -1,0 +1,168 @@
+training GAN on 4708 images, class counts (normal, pneumonia) = [1214, 3494]
+[     0/15000] D=2.287 G=0.116 D(x)=0.19 D(G(z))=0.44 (0s)
+[  1000/15000] D=1.287 G=1.092 D(x)=0.60 D(G(z))=0.52 (33s)
+[  2000/15000] D=1.445 G=0.942 D(x)=0.46 D(G(z))=0.46 (66s)
+[  3000/15000] D=1.178 G=1.075 D(x)=0.55 D(G(z))=0.42 (98s)
+[  4000/15000] D=1.373 G=0.937 D(x)=0.52 D(G(z))=0.49 (131s)
+[  5000/15000] D=1.355 G=0.786 D(x)=0.49 D(G(z))=0.46 (164s)
+[  6000/15000] D=1.254 G=1.044 D(x)=0.55 D(G(z))=0.45 (196s)
+[  7000/15000] D=1.214 G=1.204 D(x)=0.61 D(G(z))=0.50 (229s)
+[  8000/15000] D=1.230 G=1.327 D(x)=0.62 D(G(z))=0.51 (262s)
+[  9000/15000] D=1.177 G=1.033 D(x)=0.58 D(G(z))=0.45 (294s)
+[ 10000/15000] D=1.157 G=0.884 D(x)=0.52 D(G(z))=0.37 (327s)
+[ 11000/15000] D=1.171 G=0.949 D(x)=0.50 D(G(z))=0.36 (360s)
+[ 12000/15000] D=1.116 G=0.977 D(x)=0.54 D(G(z))=0.38 (392s)
+[ 13000/15000] D=1.196 G=0.937 D(x)=0.59 D(G(z))=0.47 (425s)
+[ 14000/15000] D=1.286 G=0.834 D(x)=0.58 D(G(z))=0.52 (457s)
+done in 490s -> results/gan_full
+train counts normal=1214 pneumonia=3494; val=524 test=624
+  baseline                     seed=0 AUC=0.9747 bal.acc=0.8799 recall_normal=0.765 (29s)
+  baseline                     seed=1 AUC=0.9704 bal.acc=0.8184 recall_normal=0.637 (55s)
+  baseline                     seed=2 AUC=0.9699 bal.acc=0.9056 recall_normal=0.829 (81s)
+  classical_aug                seed=0 AUC=0.9834 bal.acc=0.8705 recall_normal=0.744 (108s)
+  classical_aug                seed=1 AUC=0.9878 bal.acc=0.9282 recall_normal=0.859 (135s)
+  classical_aug                seed=2 AUC=0.9867 bal.acc=0.9308 recall_normal=0.872 (162s)
+  oversample                   seed=0 AUC=0.9743 bal.acc=0.8321 recall_normal=0.667 (200s)
+  oversample                   seed=1 AUC=0.9789 bal.acc=0.8705 recall_normal=0.744 (239s)
+  oversample                   seed=2 AUC=0.9816 bal.acc=0.8726 recall_normal=0.748 (277s)
+  gan_balance                  seed=0 AUC=0.9765 bal.acc=0.8205 recall_normal=0.641 (315s)
+  gan_balance                  seed=1 AUC=0.9798 bal.acc=0.8526 recall_normal=0.705 (353s)
+  gan_balance                  seed=2 AUC=0.9798 bal.acc=0.8556 recall_normal=0.714 (391s)
+  gan_balance+classical_aug    seed=0 AUC=0.9880 bal.acc=0.9056 recall_normal=0.816 (429s)
+  gan_balance+classical_aug    seed=1 AUC=0.9892 bal.acc=0.9162 recall_normal=0.838 (468s)
+  gan_balance+classical_aug    seed=2 AUC=0.9876 bal.acc=0.9380 recall_normal=0.902 (506s)
+  gan_double                   seed=0 AUC=0.9789 bal.acc=0.8419 recall_normal=0.684 (582s)
+  gan_double                   seed=1 AUC=0.9803 bal.acc=0.8526 recall_normal=0.705 (658s)
+  gan_double                   seed=2 AUC=0.9822 bal.acc=0.8547 recall_normal=0.709 (733s)
+  synthetic_only_TSTR          seed=0 AUC=0.9582 bal.acc=0.8184 recall_normal=0.662 (759s)
+  synthetic_only_TSTR          seed=1 AUC=0.9501 bal.acc=0.8107 recall_normal=0.650 (785s)
+  synthetic_only_TSTR          seed=2 AUC=0.9620 bal.acc=0.8444 recall_normal=0.709 (811s)
+domain_fid {
+ "normal": {
+  "synthetic_vs_real_test": 35.35289578944736,
+  "real_train_vs_real_test (reference)": 60.25786294575758
+ },
+ "pneumonia": {
+  "synthetic_vs_real_test": 0.7286597113517106,
+  "real_train_vs_real_test (reference)": 0.5917020683705754
+ }
+}
+inception_fid {
+ "normal": {
+  "synthetic_vs_real_test": 83.30265801766967,
+  "real_train_vs_real_test (reference)": 37.28119658807783
+ },
+ "pneumonia": {
+  "synthetic_vs_real_test": 57.777814938926056,
+  "real_train_vs_real_test (reference)": 28.426548363428605
+ }
+}
+# Results for `results/gan_full`
+
+Training set (normal, pneumonia): [1214, 3494]
+
+## Indirect evaluation – downstream classifier on the real test set (mean ± std over seeds)
+
+| Strategy | # train | AUC | Accuracy | Balanced acc. | Macro-F1 | Recall normal | Recall pneumonia |
+|---|---|---|---|---|---|---|---|
+| baseline | 4708 | 0.972 ± 0.002 | 0.899 ± 0.026 | 0.868 ± 0.037 | 0.885 ± 0.033 | 0.744 ± 0.080 | 0.992 ± 0.008 |
+| classical_aug | 4708 | 0.986 ± 0.002 | 0.931 ± 0.020 | 0.910 ± 0.028 | 0.923 ± 0.024 | 0.825 ± 0.058 | 0.995 ± 0.004 |
+| oversample | 6988 | 0.978 ± 0.003 | 0.893 ± 0.014 | 0.858 ± 0.019 | 0.878 ± 0.018 | 0.719 ± 0.037 | 0.997 ± 0.000 |
+| gan_balance | 6988 | 0.979 ± 0.002 | 0.882 ± 0.012 | 0.843 ± 0.016 | 0.863 ± 0.015 | 0.687 ± 0.032 | 0.999 ± 0.001 |
+| gan_balance+classical_aug | 6988 | 0.988 ± 0.001 | 0.937 ± 0.008 | 0.920 ± 0.014 | 0.931 ± 0.009 | 0.852 ± 0.036 | 0.988 ± 0.010 |
+| gan_double | 13976 | 0.980 ± 0.001 | 0.887 ± 0.004 | 0.850 ± 0.006 | 0.870 ± 0.005 | 0.699 ± 0.011 | 1.000 ± 0.000 |
+| synthetic_only_TSTR | 4708 | 0.957 ± 0.005 | 0.862 ± 0.012 | 0.825 ± 0.014 | 0.842 ± 0.014 | 0.674 ± 0.026 | 0.975 ± 0.003 |
+
+## Direct evaluation – Fréchet distances (lower is better)
+
+| Feature space | Class | Synthetic vs real test | Real train vs real test (reference) |
+|---|---|---|---|
+| domain_fid | normal | 35.35 | 60.26 |
+| domain_fid | pneumonia | 0.73 | 0.59 |
+| inception_fid | normal | 83.30 | 37.28 |
+| inception_fid | pneumonia | 57.78 | 28.43 |
+
+training GAN on 3615 images, class counts (normal, pneumonia) = [121, 3494]
+[     0/15000] D=2.184 G=0.012 D(x)=0.18 D(G(z))=0.31 (0s)
+[  1000/15000] D=1.009 G=1.123 D(x)=0.61 D(G(z))=0.38 (34s)
+[  2000/15000] D=1.358 G=0.834 D(x)=0.48 D(G(z))=0.45 (68s)
+[  3000/15000] D=1.336 G=0.774 D(x)=0.51 D(G(z))=0.48 (101s)
+[  4000/15000] D=1.048 G=1.172 D(x)=0.66 D(G(z))=0.44 (134s)
+[  5000/15000] D=1.337 G=0.786 D(x)=0.49 D(G(z))=0.46 (168s)
+[  6000/15000] D=1.306 G=0.771 D(x)=0.51 D(G(z))=0.46 (201s)
+[  7000/15000] D=1.429 G=0.792 D(x)=0.49 D(G(z))=0.51 (235s)
+[  8000/15000] D=1.344 G=0.743 D(x)=0.51 D(G(z))=0.49 (268s)
+[  9000/15000] D=1.364 G=0.760 D(x)=0.51 D(G(z))=0.49 (302s)
+[ 10000/15000] D=1.330 G=0.717 D(x)=0.50 D(G(z))=0.47 (335s)
+[ 11000/15000] D=1.375 G=0.847 D(x)=0.48 D(G(z))=0.46 (369s)
+[ 12000/15000] D=1.291 G=0.874 D(x)=0.56 D(G(z))=0.50 (402s)
+[ 13000/15000] D=1.260 G=0.778 D(x)=0.55 D(G(z))=0.48 (436s)
+[ 14000/15000] D=1.322 G=0.820 D(x)=0.53 D(G(z))=0.49 (469s)
+done in 503s -> results/gan_normal10
+train counts normal=121 pneumonia=3494; val=524 test=624
+  baseline                     seed=0 AUC=0.9528 bal.acc=0.6624 recall_normal=0.325 (23s)
+  baseline                     seed=1 AUC=0.9572 bal.acc=0.7329 recall_normal=0.466 (43s)
+  baseline                     seed=2 AUC=0.9524 bal.acc=0.7329 recall_normal=0.466 (63s)
+  classical_aug                seed=0 AUC=0.9704 bal.acc=0.7714 recall_normal=0.543 (84s)
+  classical_aug                seed=1 AUC=0.9667 bal.acc=0.7094 recall_normal=0.419 (104s)
+  classical_aug                seed=2 AUC=0.9785 bal.acc=0.8021 recall_normal=0.607 (125s)
+  oversample                   seed=0 AUC=0.9464 bal.acc=0.7009 recall_normal=0.402 (163s)
+  oversample                   seed=1 AUC=0.9160 bal.acc=0.6517 recall_normal=0.303 (202s)
+  oversample                   seed=2 AUC=0.9563 bal.acc=0.7803 recall_normal=0.568 (240s)
+  gan_balance                  seed=0 AUC=0.9659 bal.acc=0.7009 recall_normal=0.402 (279s)
+  gan_balance                  seed=1 AUC=0.9602 bal.acc=0.6923 recall_normal=0.385 (317s)
+  gan_balance                  seed=2 AUC=0.9605 bal.acc=0.6752 recall_normal=0.350 (356s)
+  gan_balance+classical_aug    seed=0 AUC=0.9839 bal.acc=0.7949 recall_normal=0.590 (394s)
+  gan_balance+classical_aug    seed=1 AUC=0.9839 bal.acc=0.7927 recall_normal=0.585 (433s)
+  gan_balance+classical_aug    seed=2 AUC=0.9848 bal.acc=0.7607 recall_normal=0.521 (472s)
+  gan_double                   seed=0 AUC=0.9458 bal.acc=0.6560 recall_normal=0.312 (548s)
+  gan_double                   seed=1 AUC=0.9631 bal.acc=0.6645 recall_normal=0.329 (624s)
+  gan_double                   seed=2 AUC=0.9673 bal.acc=0.6688 recall_normal=0.338 (699s)
+  synthetic_only_TSTR          seed=0 AUC=0.9516 bal.acc=0.7671 recall_normal=0.996 (719s)
+  synthetic_only_TSTR          seed=1 AUC=0.9601 bal.acc=0.6218 recall_normal=0.244 (740s)
+  synthetic_only_TSTR          seed=2 AUC=0.9563 bal.acc=0.6389 recall_normal=0.278 (760s)
+domain_fid {
+ "normal": {
+  "synthetic_vs_real_test": 24.440092839685224,
+  "real_train_vs_real_test (reference)": 66.2481785987899
+ },
+ "pneumonia": {
+  "synthetic_vs_real_test": 1.018924867052971,
+  "real_train_vs_real_test (reference)": 0.7187822560588669
+ }
+}
+inception_fid {
+ "normal": {
+  "synthetic_vs_real_test": 125.2010689206121,
+  "real_train_vs_real_test (reference)": 52.32243017367796
+ },
+ "pneumonia": {
+  "synthetic_vs_real_test": 52.286242723721344,
+  "real_train_vs_real_test (reference)": 28.426548363428605
+ }
+}
+# Results for `results/gan_normal10`
+
+Training set (normal, pneumonia): [121, 3494]
+
+## Indirect evaluation – downstream classifier on the real test set (mean ± std over seeds)
+
+| Strategy | # train | AUC | Accuracy | Balanced acc. | Macro-F1 | Recall normal | Recall pneumonia |
+|---|---|---|---|---|---|---|---|
+| baseline | 3615 | 0.954 ± 0.002 | 0.782 ± 0.025 | 0.709 ± 0.033 | 0.719 ± 0.041 | 0.419 ± 0.066 | 1.000 ± 0.000 |
+| classical_aug | 3615 | 0.972 ± 0.005 | 0.821 ± 0.029 | 0.761 ± 0.039 | 0.779 ± 0.043 | 0.523 ± 0.078 | 0.999 ± 0.001 |
+| oversample | 6988 | 0.940 ± 0.017 | 0.783 ± 0.039 | 0.711 ± 0.053 | 0.719 ± 0.063 | 0.425 ± 0.109 | 0.997 ± 0.004 |
+| gan_balance | 6988 | 0.962 ± 0.003 | 0.767 ± 0.008 | 0.689 ± 0.011 | 0.696 ± 0.014 | 0.379 ± 0.021 | 1.000 ± 0.000 |
+| gan_balance+classical_aug | 6988 | 0.984 ± 0.000 | 0.837 ± 0.012 | 0.783 ± 0.016 | 0.803 ± 0.017 | 0.566 ± 0.031 | 1.000 ± 0.000 |
+| gan_double | 13976 | 0.959 ± 0.009 | 0.747 ± 0.004 | 0.663 ± 0.005 | 0.662 ± 0.007 | 0.326 ± 0.011 | 1.000 ± 0.000 |
+| synthetic_only_TSTR | 3614 | 0.956 ± 0.004 | 0.718 ± 0.008 | 0.676 ± 0.065 | 0.647 ± 0.045 | 0.506 ± 0.347 | 0.846 ± 0.218 |
+
+## Direct evaluation – Fréchet distances (lower is better)
+
+| Feature space | Class | Synthetic vs real test | Real train vs real test (reference) |
+|---|---|---|---|
+| domain_fid | normal | 24.44 | 66.25 |
+| domain_fid | pneumonia | 1.02 | 0.72 |
+| inception_fid | normal | 125.20 | 52.32 |
+| inception_fid | pneumonia | 52.29 | 28.43 |
+
